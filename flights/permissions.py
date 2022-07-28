@@ -11,7 +11,5 @@ class IsOwner(BasePermission):
 class UpdateOrCancel(BasePermission):
     message = "You cannot update/cancel a booking unless it is 3 days away"
     
-    # def has_object_permission(self, request, view, obj):
-    #     # today = datetime.date.today()
-    #     # diff = obj.date - today 
-    #     return obj.date >= datetime.timedelta(days=3)
+    def has_object_permission(self, request, view, obj):
+        return obj.date >= datetime.date.today() + 3
