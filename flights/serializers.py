@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-
+from rest_framework_simplejwt.tokens import RefreshToken
 from flights.models import Booking, Flight
 
 
@@ -11,6 +11,7 @@ class FlightSerializer(serializers.ModelSerializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
+    flight = FlightSerializer(read_only=True)
     class Meta:
         model = Booking
         fields = ["flight", "date", "id"]
