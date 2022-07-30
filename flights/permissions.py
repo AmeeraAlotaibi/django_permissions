@@ -1,5 +1,5 @@
 from rest_framework.permissions import BasePermission
-import datetime
+from datetime import date, timedelta
 
 class IsOwner(BasePermission):
     message = "You must be the owner of this booking to access it"
@@ -12,4 +12,7 @@ class UpdateOrCancel(BasePermission):
     message = "You cannot update/cancel a booking unless it is 3 days away"
     
     def has_object_permission(self, request, view, obj):
-        return obj.date >= datetime.date.today() + 3
+        obj_date = obj.date
+        today = date.today()
+        diff = timedelta(days=3)
+        return obj_date > (today + diff)
